@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product | Dan Willhs</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="nav">
+  <h1 class="logo">Dan Willhs</h1>
+
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <nav id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+</header>
+
+<section class="section">
+  <div id="product"></div>
+</section>
+
+<div class="floating-cart" onclick="goToCart()">
+  🛒 <span id="cartCount">0</span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+
+<script>
+const id = Number(new URLSearchParams(location.search).get("id"));
+const p = products.find(x => x.id === id);
+
+// Error handling
+if (!p) {
+  document.getElementById("product").innerHTML = "<p>Product not found</p>";
+  throw new Error("Invalid product ID");
+}
+
+// Render product
+document.getElementById("product").innerHTML = `
+<div class="product-layout">
+
+  <!-- LEFT: IMAGE -->
+  <div class="product-image">
+    <img src="${p.image}" />
+  </div>
+
+  <!-- RIGHT: DETAILS -->
+  <div class="product-info">
+
+    <h1>${p.name}</h1>
+    <p class="price">GHS ${p.price}</p>
+
+    <!-- ⭐ RATING -->
+    <div class="stars">
+      ${"★".repeat(Math.round(p.rating || 4))}
+      ${"☆".repeat(5 - Math.round(p.rating || 4))}
+      <span>${p.rating || 4.5}/5</span>
+    </div>
+
+    <!-- 📊 ACCORDS -->
+    <h3>Main Accords</h3>
+    <div class="accords">
+      ${(p.accords || ["Woody","Sweet","Amber"]).map(a => `
+        <div class="accord">
+          <span>${a}</span>
+          <div class="bar"><div style="width:${Math.random()*100}%"></div></div>
+        </div>
+      `).join("")}
+    </div>
+
+    <!-- 🌬️ PERFORMANCE -->
+    <div class="performance">
+      <div>
+        <h4>Longevity</h4>
+        <div class="meter"><div style="width:${p.longevity || 80}%"></div></div>
+      </div>
+      <div>
+        <h4>Projection</h4>
+        <div class="meter"><div style="width:${p.projection || 70}%"></div></div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <h3>Fragrance Notes</h3>
+    <div class="notes">
+      <div class="note-group">
+        <h4>Top</h4>
+        <div id="topNotes" class="note-bubbles"></div>
+      </div>
+      <div class="note-group">
+        <h4>Middle</h4>
+        <div id="middleNotes" class="note-bubbles"></div>
+      </div>
+      <div class="note-group">
+        <h4>Base</h4>
+        <div id="baseNotes" class="note-bubbles"></div>
+      </div>
+    </div>
+
+    <!-- SIZE -->
+    <h3>Select Size</h3>
+    <select id="size">
+      <option value="50">50ml</option>
+      <option value="100">100ml</option>
+    </select>
+
+    <br><br>
+    <button class="btn" onclick="addToCart(${p.id}, this)">Add to Cart</button>
+
+  </div>
+</div>
+
+<!-- 🧠 RELATED PRODUCTS -->
+<div class="related">
+  <h2>You May Also Like</h2>
+  <div id="relatedProducts" class="products"></div>
+</div>
+`;
+
+// Notes
+function renderNotes(notes, id) {
+  document.getElementById(id).innerHTML =
+    notes.map(n => `<span class="note">${n}</span>`).join("");
+}
+
+renderNotes(p.notes.top, "topNotes");
+renderNotes(p.notes.middle, "middleNotes");
+renderNotes(p.notes.base, "baseNotes");
+
+// Related products
+const related = products.filter(x => x.category === p.category && x.id != p.id).slice(0,4);
+
+document.getElementById("relatedProducts").innerHTML = related.map(r => `
+  <div class="card">
+    <img src="${r.image}">
+    <h3>${r.name}</h3>
+    <p class="price">GHS ${r.price}</p>
+    <a href="product.html?id=${r.id}" class="btn">View</a>
+  </div>
+`).join("");
+
+// Render note bubbles
+function renderNotes(notes, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container || !notes) return;
+
+  const list = Array.isArray(notes) ? notes : [notes];
+
+  container.innerHTML = list
+    .filter(n => n) // ✅ remove undefined/null
+    .map(note => `<span class="note">${note}</span>`)
+    .join("");
+}
+
+// Render notes
+renderNotes(p.notes.top, "topNotes");
+renderNotes(p.notes.middle, "middleNotes");
+renderNotes(p.notes.base, "baseNotes");
+
+// Handle both array or string
+renderNotes(Array.isArray(p.notes.top) ? p.notes.top : [p.notes.top], "topNotes");
+renderNotes(Array.isArray(p.notes.middle) ? p.notes.middle : [p.notes.middle], "middleNotes");
+renderNotes(Array.isArray(p.notes.base) ? p.notes.base : [p.notes.base], "baseNotes");
+
+</script>
+<script>
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+</script>
+
+</body>
+</html>

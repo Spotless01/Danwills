@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Dan Willhs</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <h1 class="logo">Dan Willhs</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+
+      <!-- SEARCH -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search perfumes...">
+  </div>
+</header>
+
+<section class="section">
+  <h2 id="categoryTitle"></h2>
+  <div id="products" class="products"></div>
+</section>
+
+<div class="floating-cart" onclick="goToCart()">
+  🛒 <span id="cartCount">0</span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script>
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dan Willhs Scent</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="top-nav">
+  <h1 class="logo">Dan Willhs</h1>
+
+  <!-- HAMBURGER -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <nav id="navLinks">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+</nav>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search perfumes...">
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<!-- HERO -->
+<section class="hero" id="perfumes">
+  <div class="hero-inner">
+    <h2>Define Your Presence</h2>
+    <p>Luxury fragrances crafted for bold identity.</p>
+  </div>
+</section>
+
+<!-- ================= STORY (CINEMATIC HYBRID) ================= -->
+<!-- STORY -->
+<section class="section story cinematic" id="categories">
+
+  <video autoplay muted loop playsinline class="story-video">
+    <source src="https://cdn.coverr.co/videos/coverr-perfume-bottle-3167/1080p.mp4" type="video/mp4">
+  </video>
+
+  <div class="story-overlay"></div>
+
+  <div class="story-wrapper">
+
+    <div class="story-image floating">  
+      <img src="assets/icons/logo.jpg">
+    </div>
+
+    <div class="story-text">
+      <h2 class="story-title">Our Story</h2>
+      <div class="story-line"></div>
+
+      <p class="story-description">
+        Dan Willhs Scent has spent years crafting fragrances that define identity and presence.
+      </p>
+
+      <a href="shop.html" class="btn">Explore Collection</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= MAIN LAYOUT ================= -->
+<div class="layout">
+
+  <!-- LEFT: FILTER -->
+  <aside class="sidebar">
+    <h3>Filter</h3>
+
+    <div class="filter-group">
+      <h4>Category</h4>
+
+      <label class="filter-item">
+        <input type="checkbox" value="Men">
+        <span>Men</span>
+      </label>
+
+      <label class="filter-item">
+        <input type="checkbox" value="Women">
+        <span>Women</span>
+      </label>
+
+      <label class="filter-item">
+        <input type="checkbox" value="Unisex">
+        <span>Unisex</span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- CENTER: PRODUCTS -->
+  <main class="main-content">
+    <h2>All Fragrances</h2>
+    <div id="products" class="grid"></div>
+  </main>
+
+  <!-- RIGHT: TRENDING -->
+  <aside class="right-panel">
+    <h3>🔥 Trending</h3>
+    <div id="trending"></div>
+  </aside>
+
+</div>
+<!-- ================= FLOATING CART ================= -->
+<div class="floating-cart" onclick="goToCart()">
+  🛒 <span id="cartCount">0</span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+  <!-- SUCCESS POPUP -->
+<div id="successPopup" class="success-popup">
+  <div class="success-box">
+    <h2>🎉 Payment Started</h2>
+    <p>Your order has been prepared successfully.</p>
+    <p>Complete your payment on WhatsApp.</p>
+    <button onclick="closeSuccess()">Close</button>
+  </div>
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+function goToCart(){
+  window.location.href = "cart.html";
+}
+</script>
+<script>
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+</script>
+</body>
+</html>
