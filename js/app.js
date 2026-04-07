@@ -63,7 +63,7 @@ function renderProducts(list) {
 
         <p class="price">GHS ${p.price}</p>
 
-        <a href="product.html?id=${p.id}" class="btn">View</a>
+        <a href="product.html?id=${encodeURIComponent(p.id)}" class="btn">View</a>
 
       </div>
     `;
@@ -114,11 +114,16 @@ document.addEventListener("click", function (e) {
   }
 });
 
-document.querySelectorAll("#navLinks a").forEach(link => {
-  link.addEventListener("click", () => {
-    document.getElementById("navLinks").classList.remove("show");
+function initNav() {
+  const nav = document.getElementById("navLinks");
+  if (!nav) return;
+
+  nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("show");
+    });
   });
-});
+}
 
 // ================= FILTER LOGIC =================
 function filterProducts() {
@@ -161,8 +166,8 @@ function initEvents() {
 document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
   initEvents();
+  initNav(); // ✅ ADD THIS
 
-  // Only render if products exist
   if (Array.isArray(products)) {
     renderProducts(products);
     renderTrending();
@@ -214,4 +219,26 @@ function showSuccess() {
 function closeSuccess() {
   const popup = document.getElementById("successPopup");
   if (popup) popup.style.display = "none";
+}
+
+// ================= CONTACT FORM → WHATSAPP =================
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const phone = "233249144616";
+
+    let text = `Hello Danwilhs Fragrance Hub,%0A%0A`;
+    text += `Name: ${name}%0A`;
+    text += `Email: ${email}%0A%0A`;
+    text += `Message:%0A${message}`;
+
+    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+  });
 }
