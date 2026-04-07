@@ -99,6 +99,21 @@ function toggleMenu() {
   nav.classList.toggle("show");
 }
 
+// ================= AUTO CLOSE NAV =================
+document.addEventListener("click", function (e) {
+  const nav = document.getElementById("navLinks");
+  const toggle = document.querySelector(".menu-toggle");
+
+  if (!nav || !toggle) return;
+
+  const isClickInsideNav = nav.contains(e.target);
+  const isClickToggle = toggle.contains(e.target);
+
+  if (!isClickInsideNav && !isClickToggle) {
+    nav.classList.remove("show");
+  }
+});
+
 document.querySelectorAll("#navLinks a").forEach(link => {
   link.addEventListener("click", () => {
     document.getElementById("navLinks").classList.remove("show");
