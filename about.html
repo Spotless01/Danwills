@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About | Dan Willhs</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="about-page">
@@ -162,10 +163,17 @@ We focus on unique and uncommon fragrances to help customers stand out.
 </section>
 
 <!-- CONTACT -->
-<section class="section" style="text-align:center;">
-<h2 class="about-title">Contact</h2>
-<p>📞 0249144616 / 0574785333</p>
-<p>📱 TikTok / IG / FB: Danwilhs Fragrance Hub</p>
+<section class="contact section">
+  <h2>Contact Us</h2>
+  <p>Have a question or need help? Send us a message instantly.</p>
+
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+
+    <button type="submit" class="btn">Send Message</button>
+  </form>
 </section>
 
 <script src="js/app.js"></script>
