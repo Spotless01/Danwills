@@ -258,24 +258,36 @@ body.loaded {
 }
 
 /* =========================================================
-   4. NAVIGATION BAR
+   4. NAVIGATION BAR (CLEAN + CONSISTENT)
 ========================================================= */
+
 .nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 18px 40px;
-  background: rgba(0,0,0,.85);
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.95);
   position: sticky;
   top: 0;
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  z-index: 1000;
+}
+
+/* Logo */
+.logo {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* NAV LINKS (DESKTOP) */
+#navLinks {
+  display: flex;
+  gap: 20px;
 }
 
 .nav a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
-  margin: 0 12px;
   position: relative;
 }
 
@@ -294,16 +306,59 @@ body.loaded {
   width: 100%;
 }
 
-.logo {
-  font-family: 'Playfair Display', serif;
-  color: var(--gold);
-  letter-spacing: 1px;
-}
-
-
+/* SEARCH */
 .search-bar {
   width: 25%;
 }
+
+/* HAMBURGER */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #fff; /* ALWAYS visible */
+  background-color: transparent;
+}
+
+/* =========================================================
+   MOBILE NAV FIX (SINGLE SOURCE OF TRUTH)
+========================================================= */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+    background: transparent;
+    color: #fff;
+  }
+
+  #navLinks {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6); /* ✅ transparent */
+    backdrop-filter: blur(10px);   /* ✅ glass effect */
+    flex-direction: column;
+    text-align: center;
+    display: none;
+    padding: 20px 0;
+  }
+
+  #navLinks a {
+    display: block;
+    padding: 12px 0;
+    color: #fff;
+  }
+
+  #navLinks.show {
+    display: flex;
+  }
+
+  .search-bar {
+    display: none;
+  }
+}
+
 /* =========================================================
    5. HERO SECTION
 ========================================================= */
@@ -1123,45 +1178,6 @@ input {
 
   .about-line {
     margin: 10px auto 25px;
-  }
-}
-
-/* ================= MOBILE NAV ================= */
-
-.menu-toggle {
-  display: none;
-  font-size: 26px;
-  cursor: pointer;
-  color: #000;
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {
-
-  .menu-toggle {
-    display: block;
-  }
-
-  #navLinks {
-    position: absolute;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    display: none;
-    flex-direction: column;
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #eee;
-  }
-
-  #navLinks a {
-    padding: 12px 0;
-    display: block;
-  }
-
-  #navLinks.show {
-    display: flex;
   }
 }
 
