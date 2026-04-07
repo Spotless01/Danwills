@@ -618,6 +618,8 @@ body.loaded {
   padding: 60px 40px;
 }
 
+
+
 .card {
   transition: 0.35s;
   position: relative;
@@ -1189,4 +1191,37 @@ input {
   background: var(--gold);
   border: none;
   cursor: pointer;
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+}
+
+/* ================= PRODUCT MOBILE FIX ================= */
+@media (max-width: 768px) {
+
+  .product-layout {
+    grid-template-columns: 1fr; /* stack vertically */
+    gap: 30px;
+    padding: 20px;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* prevents giant images */
+    object-fit: contain; /* keeps full image visible */
+  }
+
+  .product-info {
+    text-align: left;
+  }
+
 }
