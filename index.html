@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Luxury perfumes in Ghana. Shop Lattafa, Armaf, Tom Ford and more at Danwilhs Fragrance Hub.">
 <title>Dan Willhs Scent</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -64,9 +66,15 @@
 
 <p style="margin-top:20px;">
   ⭐ Find us on Google: 
-  <a href="https://share.google/ZiUbqrTzIfYfkBgR8" target="_blank">
+  <a href="https://share.google/ZiUbqrTzIfYfkBgR8" target="_blank" rel="noopener"></a>
     Danwilhs Fragrance Hub
   </a>
+</p>
+
+<p style="margin-top:15px; font-size:14px; opacity:0.8;">
+  ✔ Authentic Fragrances  
+  ✔ Fast Delivery  
+  ✔ Pay via WhatsApp
 </p>
   </div>
 </section>
@@ -84,7 +92,7 @@
   <div class="story-wrapper">
 
     <div class="story-image floating">  
-      <img src="assets/icons/logo.jpg">
+      <img src="assets/icons/logo.jpg" alt="Dan Willhs Logo">
     </div>
 
     <div class="story-text">
@@ -109,24 +117,101 @@
     <h3>Filter</h3>
 
     <div class="filter-group">
-      <h4>Category</h4>
+  <h4>Brands</h4>
 
-      <label class="filter-item">
-        <input type="checkbox" value="Men">
-        <span>Men</span>
-      </label>
+  <button onclick="showAllProducts()">All Products</button>
 
-      <label class="filter-item">
-        <input type="checkbox" value="Women">
-        <span>Women</span>
-      </label>
+  <label class="filter-item">
+    <input type="checkbox" value="Lattafa"> <span>Lattafa</span>
+  </label>
 
-      <label class="filter-item">
-        <input type="checkbox" value="Unisex">
-        <span>Unisex</span>
-      </label>
-    </div>
+  <label class="filter-item">
+    <input type="checkbox" value="Maison Yusif"> <span>Maison Yusif</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Scent of Africa"> <span>Scent of Africa</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Armaf"> <span>Armaf</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Fragrance World"> <span>Fragrance World</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Creed"> <span>Creed</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Tom Ford"> <span>Tom Ford</span>
+  </label>
+
+  <label class="filter-item">
+    <input type="checkbox" value="Carolina Herrera"> <span>Carolina Herrera</span>
+  </label>
+</div>
   </aside>
+
+
+<section class="brands-section">
+
+  <h2 class="section-title">Explore By Brand</h2>
+  <p class="section-sub">
+    Discover world-class fragrance houses — from Arabian luxury to designer icons.
+  </p>
+
+  <div class="brands-grid">
+
+    <div class="brand-card" onclick="filterByBrand('Lattafa')">
+      <h3>Lattafa</h3>
+      <p>Luxury Arabian perfumes known for bold, long-lasting scents at accessible prices.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Maison Yusif')">
+      <h3>Maison Yusif</h3>
+      <p>Modern niche fragrances crafted with elegance, depth, and identity.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Scent of Africa')">
+      <h3>Scent of Africa</h3>
+      <p>Premium Ghanaian fragrance house inspired by African heritage and storytelling.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Armaf')">
+      <h3>Armaf</h3>
+      <p>Famous for high-quality designer-inspired scents with powerful performance.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Fragrance World')">
+      <h3>Fragrance World</h3>
+      <p>Affordable luxury fragrances delivering bold and captivating compositions.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Creed')">
+      <h3>Creed</h3>
+      <p>Iconic luxury house known for timeless, refined fragrances like Aventus.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Tom Ford')">
+      <h3>Tom Ford</h3>
+      <p>Bold, sensual, and sophisticated designer fragrances with a premium feel.</p>
+    </div>
+
+    <div class="brand-card" onclick="filterByBrand('Carolina Herrera')">
+      <h3>Carolina Herrera</h3>
+      <p>Elegant and stylish scents blending modern luxury with classic charm.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<div style="text-align:center; margin:40px 0;">
+  <div style="width:60px; height:2px; background:var(--gold); margin:auto;"></div>
+</div>
 
   <!-- CENTER: PRODUCTS -->
   <main class="main-content">
@@ -151,9 +236,8 @@
   <!-- SUCCESS POPUP -->
 <div id="successPopup" class="success-popup">
   <div class="success-box">
-    <h2>🎉 Payment Started</h2>
-    <p>Your order has been prepared successfully.</p>
-    <p>Complete your payment on WhatsApp.</p>
+    <h3>✅ Order Sent!</h3>
+    <p>Redirecting you to WhatsApp...</p>
     <button onclick="closeSuccess()">Close</button>
   </div>
 </div>
@@ -161,6 +245,7 @@
 <!-- ================= SCRIPTS ================= -->
 <script src="js/products.js"></script>
 <script src="js/app.js"></script>
+<script src="js/cart.js"></script>
 
 <script>
 function goToCart(){
