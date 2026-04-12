@@ -54,12 +54,13 @@ function renderProducts(list) {
           <span class="rating-value">${p.rating || 4}/5</span>
         </div>
 
-        <!-- 🧴 NOTES -->
-        <div class="notes">
-          <div><strong>Top:</strong> ${p.notes?.top || "-"}</div>
-          <div><strong>Middle:</strong> ${p.notes?.middle || "-"}</div>
-          <div><strong>Base:</strong> ${p.notes?.base || "-"}</div>
-        </div>
+        <p class="brand">${p.brand}</p>
+
+<div class="notes">
+  <div><strong>Top:</strong> ${p.notes?.top?.join(", ") || "-"}</div>
+  <div><strong>Middle:</strong> ${p.notes?.middle?.join(", ") || "-"}</div>
+  <div><strong>Base:</strong> ${p.notes?.base?.join(", ") || "-"}</div>
+</div>
 
         <p class="price">GHS ${p.price}</p>
 
@@ -96,6 +97,7 @@ function goToProduct(id) {
 
 function toggleMenu() {
   const nav = document.getElementById("navLinks");
+  if (!nav) return;
   nav.classList.toggle("show");
 }
 
@@ -126,27 +128,61 @@ function initNav() {
 }
 
 // ================= FILTER LOGIC =================
+function showAllProducts() {
+  if (!searchInput) return;
+
+  searchInput.value = "";
+  checkboxes.forEach(cb => cb.checked = false);
+
+  renderProducts(products);
+}
+
 function filterProducts() {
   if (!searchInput) return;
 
   let search = searchInput.value.toLowerCase();
 
-  let selectedCategories = Array.from(checkboxes)
+  let selectedBrands = Array.from(checkboxes)
     .filter(cb => cb.checked)
     .map(cb => cb.value);
 
   let filtered = products.filter(p => {
 
-    let matchSearch = (p.name || "").toLowerCase().includes(search);
+    let matchSearch =
+      (p.name || "").toLowerCase().includes(search) ||
+      (p.brand || "").toLowerCase().includes(search);
 
-    let matchCategory =
-  selectedCategories.length === 0 ||
-  selectedCategories.includes((p.category || "").trim());
+    let matchBrand =
+      selectedBrands.length === 0 ||
+      selectedBrands.includes((p.brand || "").trim());
 
-    return matchSearch && matchCategory;
+    return matchSearch && matchBrand;
   });
 
   renderProducts(filtered);
+}
+
+
+function filterByBrand(brand) {
+  if (!searchInput) return;
+
+  // Clear search
+  searchInput.value = "";
+
+  // Uncheck all first
+  checkboxes.forEach(cb => cb.checked = false);
+
+  // Check selected brand
+  checkboxes.forEach(cb => {
+    if (cb.value === brand) {
+      cb.checked = true;
+    }
+  });
+
+  filterProducts();
+
+  // Scroll to products
+  document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
 }
 
 // ================= EVENTS =================
@@ -202,12 +238,18 @@ function payWithWhatsApp() {
   message += `%0A*Total:* GHS ${total}%0A`;
   message += `%0APlease assist me with payment.`;
 
-  // ✅ Show success BEFORE redirect
+  // ✅ SHOW SUCCESS FIRST
   showSuccess();
 
+  // ✅ DELAY BEFORE REDIRECT (important)
   setTimeout(() => {
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  }, 1000);
+
+    // OPTIONAL: clear cart after sending
+    localStorage.removeItem("cart");
+    updateCartCount();
+
+  }, 1500); // increased delay
 }
 
 //Sucess Popup
@@ -222,23 +264,35 @@ function closeSuccess() {
 }
 
 // ================= CONTACT FORM → WHATSAPP =================
-const contactForm = document.getElementById("contactForm");
+document.addEventListener("DOMContentLoaded", () => {
+  initAnimations();
+  initEvents();
+  initNav();
 
-if (contactForm) {
-  contactForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+  if (Array.isArray(products)) {
+    renderProducts(products);
+    renderTrending();
+  }
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+  // ✅ CONTACT FORM FIX
+  const contactForm = document.getElementById("contactForm");
 
-    const phone = "233249144616";
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    let text = `Hello Danwilhs Fragrance Hub,%0A%0A`;
-    text += `Name: ${name}%0A`;
-    text += `Email: ${email}%0A%0A`;
-    text += `Message:%0A${message}`;
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
 
-    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
-  });
-}
+      const phone = "233249144616";
+
+      let text = `Hello Danwilhs Fragrance Hub,%0A%0A`;
+      text += `Name: ${name}%0A`;
+      text += `Email: ${email}%0A%0A`;
+      text += `Message:%0A${message}`;
+
+      window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+    });
+  }
+});
