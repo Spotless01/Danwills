@@ -248,12 +248,18 @@ body.loaded {
 
 @media (max-width: 900px) {
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 80px 1fr 80px;
+    gap: 10px;
   }
 
-  .sidebar,
+  .sidebar {
+    font-size: 12px;
+    padding: 10px;
+  }
+
   .right-panel {
-    width: 100%;
+    font-size: 12px;
+    padding: 10px;
   }
 }
 
@@ -1420,4 +1426,9 @@ input {
   transform: translateY(-5px);
   border-color: var(--gold);
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.main-content {
+  max-width: 700px;
+  margin: auto;
 }
