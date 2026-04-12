@@ -1,164 +1,131 @@
-const products=[
-{
-  id:1,
-  name:"Aventos",
-  price: 50,
-  category:"Unisex",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/69/8694011/1.jpg?2458",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 60,
-  projection: 60,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:2,
-  name:"Brown Orchid Eau de Parfum Spray - 80ml",
-  price: 82,
-  category:"Unisex",
-  image:"https://gh.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/84/829813/1.jpg?8110",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 60,
-  projection: 60,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:3,
-  name:"Musamam Eau De Farfum- 100ml",
-  price: 520,
-  category:"Unisex",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/40/7950982/2.jpg?5943",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 80,
-  projection: 95,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:4,
-  name:"Tobacco Rouge Perfume 100ml",
-  price: 250,
-  category:"Male",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/45/4006261/1.jpg?8889",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 55,
-  projection: 62,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:5,
-  name:"Golden Night Body Spray - 200ml",
-  price: 70,
-  category:"Female",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/14/657094/1.jpg?5927",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 42,
-  projection: 56,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:6,
-  name:"SWEET NIGHT Wild Men's Fragrance-50ml",
-  price: 70,
-  category:"Male",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/08/1505003/2.jpg?9843",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 26,
-  projection: 50,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:7,
-  name:"SWEET NIGHT Colorful Perfume - 65ml",
-  price: 70,
-  category:"Male",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/51/2705003/1.jpg?9410",
-  rating: 5,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 32,
-  projection: 44,
-  notes: {
-            top: ["",""],
-            middle: ["",""],
-            base: ["","",""]
-         }
-},
-{
-  id:8,
-  name:"Strawberry Vanilla Fine Fragrance - 236ml",
-  price: 60,
-  category:"Female",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/54/9205003/1.jpg?4663",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 32,
-  projection: 44,
-  notes: {
-            top: ["Aventos"],
-            middle: ["Golden Night Body Spray"],
-            base: ["SWEET NIGHT Colorful Perfume"]
-         }
-},
-{
-  id:9,
-  name:"Portable Refillable Spray Perfume Bottle Cosmetic Container - 5ML Gold",
-  price: 100,
-  category:"Unisex",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/12/3032482/1.jpg?3607",
-  rating: 5,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 80,
-  projection: 95,
-  notes: {
-            top: ["Aventos"],
-            middle: ["Golden Night Body Spray"],
-            base: ["SWEET NIGHT Colorful Perfume"]
-         }
-},
-{
-  id:10,
-  name:"Mr England Touch for Men Eau de Parfum 100ml",
-  price: 250,
-  category:"Men",
-  image:"https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/82/7324451/1.jpg?8805",
-  rating: 4,
-  accords: ["Woody","Amber","Smoky"],
-  longevity: 86,
-  projection: 95,
-  notes: {
-            top: ["Strawberry Vanilla Fine Fragrance"],
-            middle: ["Golden Night Body Spray"],
-            base: ["SWEET NIGHT Colorful Perfume"]
-         }
-},
+function filterByBrand(brand) {
+  const filtered = products.filter(p => 
+    p.brand.toLowerCase() === brand.toLowerCase()
+  );
 
+  displayProducts(filtered);
 
+  document.getElementById("products")?.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function showAllProducts() {
+  displayProducts(products);
+}
+
+// ================= INTELLIGENCE ENGINE =================
+
+// Realistic fragrance database (expandable)
+const fragranceDB = {
+  woody: {
+    accords: ["Woody", "Smoky", "Earthy"],
+    notes: {
+      top: ["Bergamot", "Lemon"],
+      middle: ["Cedar", "Patchouli"],
+      base: ["Sandalwood", "Amber", "Musk"]
+    }
+  },
+
+  fresh: {
+    accords: ["Citrus", "Fresh", "Aquatic"],
+    notes: {
+      top: ["Lemon", "Grapefruit"],
+      middle: ["Lavender", "Mint"],
+      base: ["Musk", "Amber"]
+    }
+  },
+
+  sweet: {
+    accords: ["Vanilla", "Sweet", "Amber"],
+    notes: {
+      top: ["Apple", "Caramel"],
+      middle: ["Tonka Bean", "Chocolate"],
+      base: ["Vanilla", "Amber", "Musk"]
+    }
+  },
+
+  spicy: {
+    accords: ["Spicy", "Warm", "Amber"],
+    notes: {
+      top: ["Pepper", "Cardamom"],
+      middle: ["Cinnamon", "Clove"],
+      base: ["Amber", "Vanilla", "Oud"]
+    }
+  }
+};
+
+// Auto assign profile
+function enhanceProduct(product) {
+  const profiles = Object.keys(fragranceDB);
+  const profile = profiles[Math.floor(Math.random() * profiles.length)];
+  const data = fragranceDB[profile];
+
+  return {
+    ...product,
+    accords: data.accords,
+    notes: data.notes,
+    longevity: Math.floor(Math.random() * 40) + 60, // 60–100
+    projection: Math.floor(Math.random() * 40) + 60
+  };
+}
+
+const rawProducts = [
+  {
+    id: 1,
+    name: "Asad",
+    price: 120,
+    brand: "Lattafa",
+    image: "https://dxbperfume.co.uk/cdn/shop/files/Lattafa_Asad_Eau_De_Parfum_100ml.jpg?v=1730285011&width=2048"
+  },
+  {
+    id: 2,
+    name: "Club de Nuit Intense",
+    price: 150,
+    brand: "Armaf",
+    image: "https://m.media-amazon.com/images/I/61xqXyVpYrL._AC_UF894,1000_QL80_.jpg"
+  }
 ];
+
+// AUTO-ENHANCED PRODUCTS
+const products = rawProducts.map(enhanceProduct);
+
+function filterByBrand(brand) {
+  const filtered = products.filter(p =>
+    p.brand.toLowerCase() === brand.toLowerCase()
+  );
+
+  displayProducts(filtered);
+
+  document.getElementById("products")?.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function getOccasion(product) {
+  if (product.accords.includes("Fresh")) return "Office / Day";
+  if (product.accords.includes("Sweet")) return "Date / Night";
+  if (product.accords.includes("Woody")) return "Evening / Formal";
+  return "Anytime";
+}
+
+function getVibe(product) {
+  if (product.accords.includes("Sweet")) return "Sexy 🔥";
+  if (product.accords.includes("Fresh")) return "Clean 🧊";
+  if (product.accords.includes("Woody")) return "Boss 💼";
+  return "Signature ✨";
+}
+
+function getSimilarProducts(currentProduct) {
+  return products.filter(p => {
+    if (p.id === currentProduct.id) return false;
+
+    const sameBrand = p.brand === currentProduct.brand;
+    const sharedAccord = p.accords.some(a =>
+      currentProduct.accords.includes(a)
+    );
+
+    return sameBrand || sharedAccord;
+  }).slice(0, 4);
+}
+
