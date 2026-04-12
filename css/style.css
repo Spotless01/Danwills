@@ -1289,3 +1289,135 @@ input {
   min-height: 120px;
   resize: none;
 }
+
+.success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.7);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999; /* 🔥 force above everything */
+}
+
+.success-box {
+  background: #fff;
+  color: #000;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ================= PREMIUM BRANDS SECTION ================= */
+
+.brands-section {
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.section-sub {
+  color: var(--muted);
+  margin-bottom: 50px;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* Brand Card */
+.brand-card {
+  background: linear-gradient(145deg, #111, #0b0b0b);
+  border: 1px solid rgba(201,169,110,0.15);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow effect */
+.brand-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(201,169,110,0.2), transparent 70%);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.brand-card:hover::before {
+  opacity: 1;
+}
+
+/* Hover animation */
+.brand-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+.brand-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.brand-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.brand-card.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 25px rgba(201,169,110,0.4);
+}
+
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--gold);
+  transform: scale(1.2);
+}
+
+.brand-card {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.brand-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
