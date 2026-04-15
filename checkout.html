@@ -4,50 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout | Dan Willhs</title>
+
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
 
 <header class="nav">
-
   <h1 class="logo">Dan Willhs</h1>
 
-  <!-- HAMBURGER -->
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-  <!-- NAV LINKS -->
   <nav id="navLinks">
     <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
     <a href="about.html">About</a>
     <a href="cart.html">Cart</a>
   </nav>
-
-  <!-- SEARCH (optional for all pages) -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search perfumes...">
-  </div>
-
 </header>
 
 <section class="section cart">
 
   <h2>Checkout</h2>
 
-  <!-- Order Summary -->
+  <!-- CUSTOMER FORM -->
+  <form class="checkout-form" onsubmit="event.preventDefault()">
+
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="tel" id="phone" placeholder="Phone Number" required>
+    <input type="email" id="email" placeholder="Email (optional)">
+    <input type="text" id="address" placeholder="Delivery Address" required>
+
+  </form>
+
+  <br>
+
+  <!-- ORDER SUMMARY -->
   <div id="checkoutItems"></div>
   <h3 id="checkoutTotal"></h3>
 
+  <br>
 
   <button onclick="payWithPaystack()" class="btn">Pay Now</button>
+
   <button class="btn" onclick="payWithWhatsApp()">
-  Pay via WhatsApp
-</button>
-  
+    Pay via WhatsApp
+  </button>
 
 </section>
 
+<div id="thankYouPopup" class="success-popup">
+  <div class="success-box">
+    <h3>🎉 Thank You!</h3>
+    <p>Your order has been sent successfully.</p>
+    <button onclick="closeThankYou()">Close</button>
+  </div>
+</div>
 
 <div class="floating-cart" onclick="goToCart()">
   🛒 <span id="cartCount">0</span>
@@ -55,16 +69,27 @@
 
 <div id="toast" class="toast"></div>
 
+<!-- PAYSTACK -->
 <script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="js/products.js"></script>
+
+<!-- ✅ ONLY THESE SCRIPTS -->
 <script src="js/cart.js"></script>
 <script src="js/checkout.js"></script>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
+
+<script>
+function goToCart(){
+  window.location.href = "cart.html";
+}
+</script>
+
 <script>
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
 });
 </script>
+
+
 
 </body>
 </html>
