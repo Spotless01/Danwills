@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop | Dan Willhs</title>
+
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
 <header class="nav">
@@ -23,7 +26,7 @@
     <a href="cart.html">Cart</a>
   </nav>
 
-  <!-- SEARCH (optional for all pages) -->
+  <!-- SEARCH -->
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search perfumes...">
   </div>
@@ -31,18 +34,43 @@
 </header>
 
 <section class="section">
-  <h2 id="categoryTitle"></h2>
-  <div id="products" class="products"></div>
+  <h2 id="categoryTitle">All Products</h2>
+  <div id="products" class="grid"></div>
 </section>
 
+<!-- FLOATING CART -->
 <div class="floating-cart" onclick="goToCart()">
   🛒 <span id="cartCount">0</span>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<script src="js/products.js"></script>
-<script src="js/app.js"></script>
+<!-- ================= FIREBASE ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVLoGB4S25-HSHx_HCtltGs1u_-U4n9lE",
+    authDomain: "danwilhs-store.firebaseapp.com",
+    projectId: "danwilhs-store",
+    storageBucket: "danwilhs-store.firebasestorage.app",
+    messagingSenderId: "486741086200",
+    appId: "1:486741086200:web:aa764d7bb19dd2af7a500d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.db = db;
+</script>
+
+<!-- ================= APP ================= -->
+<script type="module" src="js/app.js"></script>
+
+<!-- ================= CART ================= -->
+<script src="js/cart.js"></script>
+
 <script>
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
