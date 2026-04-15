@@ -26,6 +26,9 @@
     <a href="shop.html">Shop</a>
     <a href="about.html">About</a>
     <a href="cart.html">Cart</a>
+    <a href="admin.html" class="admin-link" style="opacity:0.6; font-size:13px;">
+  ⚙ Admin
+</a>
   </nav>
 
   <!-- SEARCH (optional for all pages) -->
@@ -66,9 +69,9 @@
 
 <p style="margin-top:20px;">
   ⭐ Find us on Google: 
-  <a href="https://share.google/ZiUbqrTzIfYfkBgR8" target="_blank" rel="noopener">
+  <button class="google-link"><a href="https://share.google/ZiUbqrTzIfYfkBgR8" target="_blank" rel="noopener">
     Danwilhs Fragrance Hub
-  </a>
+  </a></button>
 </p>
 
 <p style="margin-top:15px; font-size:14px; opacity:0.8;">
@@ -223,7 +226,7 @@
   </main>
 
     <!-- RIGHT: TRENDING -->
-    <aside class="right-panel">
+    <aside>
       <h3>🔥 Trending</h3>
       <div id="trending"></div>
     </aside>
@@ -245,9 +248,28 @@
   </div>
 </div>
 
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyCVLoGB4S25-HSHx_HCtltGs1u_-U4n9lE",
+  authDomain: "danwilhs-store.firebaseapp.com",
+  projectId: "danwilhs-store",
+  storageBucket: "danwilhs-store.firebasestorage.app",
+  messagingSenderId: "486741086200",
+  appId: "1:486741086200:web:aa764d7bb19dd2af7a500d"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.db = db;
+</script>
+
 <!-- ================= SCRIPTS ================= -->
-<script src="js/products.js"></script>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 <script src="js/cart.js"></script>
 
 <script>
