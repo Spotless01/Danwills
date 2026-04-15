@@ -1,41 +1,48 @@
-// Load cart
+// ================= CART STATE =================
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Save cart helper
+// ================= SAVE =================
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Add to cart
-function addToCart(id, btn) {
-  let size = document.getElementById("size")?.value || "50";
-  const product = products.find(p => p.id == id);
-
-  const existing = cart.find(item => item.id == id && item.size == size);
-
-  if (existing) {
-    existing.qty = (existing.qty || 1) + 1;
-  } else {
-    cart.push({ ...product, size, qty: 1 });
+// ================= ADD TO CART =================
+function addToCart(product, btn) {
+  if (!product || !product.id) {
+    alert("Invalid product");
+    return;
   }
 
-  saveCart();
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Button feedback
+  const existing = cart.find(item => item.id === product.id);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      image: product.image || "",
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  showToast("Added to cart 🛒");
+  updateCartCount();
+
   if (btn) {
-    const originalText = btn.innerText;
-
     btn.innerText = "Added ✓";
     btn.disabled = true;
 
     setTimeout(() => {
-      btn.innerText = originalText;
+      btn.innerText = "Add to Cart";
       btn.disabled = false;
-    }, 2000);
+    }, 1500);
   }
-
-
-updateCartCount(); // 👈 ADD THIS
 }
 
 // Increase quantity
@@ -85,18 +92,24 @@ function renderCart() {
   el.innerHTML = "";
 
   cart.forEach((item, index) => {
-    const qty = item.qty || 1;
-    const itemTotal = item.price * qty;
+    const name = item.name || "Unknown Product";
+const price = Number(item.price) || 0;
+const qty = item.qty || 1;
+const itemTotal = price * qty;
 
     total += itemTotal;
 
     el.innerHTML += `
       <div class="cart-item">
-        
-        <div>
-          <strong>${item.name}</strong><br>
-          <small>${item.size}ml</small>
-        </div>
+
+  <img src="${item.image}"
+     onerror="this.style.display='none'"
+     style="width:60px;height:60px;object-fit:cover">
+
+  <div>
+    <strong>${item.name || "Unknown Product"}</strong><br>
+    <small>${item.size || ""}ml</small>
+  </div>
 
         <div>
           <button onclick="decreaseQty(${index})">−</button>
@@ -115,6 +128,7 @@ function renderCart() {
   totalEl.innerText = "Total: GHS " + total;
 
   if (checkoutBtn) checkoutBtn.style.display = "inline-block";
+checkoutBtn.href = "checkout.html";
 }
 
 // Run
@@ -124,14 +138,12 @@ function updateCartCount() {
   const countEl = document.getElementById("cartCount");
   if (!countEl) return;
 
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
   let totalItems = 0;
   cart.forEach(item => totalItems += item.qty || 1);
 
   countEl.innerText = totalItems;
-
-  // Bounce effect
-  countEl.classList.add("bounce");
-  setTimeout(() => countEl.classList.remove("bounce"), 400);
 }
 
 // Go to Cart
@@ -153,3 +165,7 @@ function showToast(message) {
     toast.classList.remove("show");
   }, 2000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+});
