@@ -737,7 +737,7 @@ body.about-page .section {
 
 @media (max-width: 900px) {
   .layout {
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 105px 1fr;
     gap: 15px;
   }
 
