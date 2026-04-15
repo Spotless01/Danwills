@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cart | Dan Willhs</title>
+
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -24,11 +26,6 @@
     <a href="cart.html">Cart</a>
   </nav>
 
-  <!-- SEARCH (optional for all pages) -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search perfumes...">
-  </div>
-
 </header>
 
 <section class="section cart">
@@ -37,21 +34,42 @@
 
   <div id="cartItems"></div>
   <h3 id="total" class="total"></h3>
-
   <a href="checkout.html" id="checkoutBtn" class="btn">Checkout</a>
-
 </section>
 
+<!-- FLOATING CART -->
 <div class="floating-cart" onclick="goToCart()">
   🛒 <span id="cartCount">0</span>
 </div>
 
 <div id="toast" class="toast"></div>
 
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="success-popup">
+  <div class="success-box">
+    <h3>✅ Order Sent!</h3>
+    <p>Redirecting you to WhatsApp...</p>
+    <button onclick="closeSuccess()">Close</button>
+  </div>
+</div>
 
-<script src="js/products.js"></script>
+<!-- ================= SCRIPTS ================= -->
+
 <script src="js/cart.js"></script>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
+
+<!-- ✅ MINI NAV FIX (since no app.js here) -->
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("navLinks");
+  nav.classList.toggle("show");
+}
+
+function goToCart(){
+  window.location.href = "cart.html";
+}
+</script>
+
 <script>
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
