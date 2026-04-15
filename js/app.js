@@ -1,8 +1,18 @@
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+
+
 // ================= DOM ELEMENTS =================
 const container = document.getElementById("products");
 const searchInput = document.getElementById("searchInput");
 const checkboxes = document.querySelectorAll(".filter-group input");
 const trendingContainer = document.getElementById("trending");
+
+
+let products = []; // ✅ now comes from Firebase
 
 // ================= SCROLL ANIMATIONS =================
 function initAnimations() {
@@ -19,6 +29,36 @@ function initAnimations() {
   }, { threshold: 0.2 });
 
   elements.forEach(el => observer.observe(el));
+}
+
+
+async function loadProductsFromFirebase() {
+  if (!container) return;
+
+  container.innerHTML = "Loading products...";
+
+  try {
+    const snap = await getDocs(collection(window.db, "products"));
+
+    products = [];
+
+    snap.forEach(doc => {
+      products.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
+    renderProducts(products);
+    renderTrending();
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Failed to load products";
+  }
+
+
+  console.log("DB:", window.db);
 }
 
 // ================= RENDER PRODUCTS =================
@@ -46,7 +86,7 @@ function renderProducts(list) {
         <img src="${p.image}" alt="${p.name}">
 
         <h3>${p.name}</h3>
-        <p class="brand">${p.category}</p>
+        <p class="brand">${p.brand}</p>
 
         <!-- ⭐ RATING -->
         <div class="rating">
@@ -64,7 +104,9 @@ function renderProducts(list) {
 
         <p class="price">GHS ${p.price}</p>
 
-        <a href="product.html?id=${encodeURIComponent(p.id)}" class="btn">View</a>
+        <a href="product.html?id=${p.id}" class="btn">
+  View Product
+</a>
 
       </div>
     `;
@@ -198,17 +240,6 @@ function initEvents() {
   }
 }
 
-// ================= INITIAL LOAD =================
-document.addEventListener("DOMContentLoaded", () => {
-  initAnimations();
-  initEvents();
-  initNav(); // ✅ ADD THIS
-
-  if (Array.isArray(products)) {
-    renderProducts(products);
-    renderTrending();
-  }
-});
 
 function payWithWhatsApp() {
 
@@ -221,7 +252,7 @@ function payWithWhatsApp() {
   }
 
   let message = `Hello Danwilhs Fragrance Hub,%0A%0A`;
-  message += `I want to make payment for the following items:%0A%0A`;
+  message += `I want to order:%0A%0A`;
 
   let total = 0;
 
@@ -235,21 +266,9 @@ function payWithWhatsApp() {
     message += `• ${item.name} (x${qty}) - GHS ${subtotal}%0A`;
   });
 
-  message += `%0A*Total:* GHS ${total}%0A`;
-  message += `%0APlease assist me with payment.`;
+  message += `%0A*Total:* GHS ${total}`;
 
-  // ✅ SHOW SUCCESS FIRST
-  showSuccess();
-
-  // ✅ DELAY BEFORE REDIRECT (important)
-  setTimeout(() => {
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-
-    // OPTIONAL: clear cart after sending
-    localStorage.removeItem("cart");
-    updateCartCount();
-
-  }, 1500); // increased delay
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
 //Sucess Popup
@@ -264,17 +283,14 @@ function closeSuccess() {
 }
 
 // ================= CONTACT FORM → WHATSAPP =================
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
   initEvents();
   initNav();
 
-  if (Array.isArray(products)) {
-    renderProducts(products);
-    renderTrending();
-  }
+  loadProductsFromFirebase(); // ✅ THIS is the real source now
 
-  // ✅ CONTACT FORM FIX
+  // CONTACT FORM
   const contactForm = document.getElementById("contactForm");
 
   if (contactForm) {
@@ -296,3 +312,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+window.toggleMenu = toggleMenu;
+window.goToCart = goToCart;
+window.goToProduct = goToProduct;
+window.filterByBrand = filterByBrand;
+window.showAllProducts = showAllProducts;
+
+window.payWithWhatsApp = payWithWhatsApp;
