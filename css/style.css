@@ -553,17 +553,19 @@ body.about-page .section {
 
 /* Card styling */
 .card {
-  background: #fff;
-  color: #000;
-  border: 1px solid #e5e5e5;
+  background: #111;
+  color: #fff;
+  border: 1px solid #222;
   padding: 15px;
   transition: 0.35s ease;
   position: relative;
+  border-radius: 10px;
 }
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  border-color: var(--gold);
 }
 
 .card img {
@@ -1030,148 +1032,249 @@ textarea {
 /* =========================================================
    18. ABOUT SECTION (PREMIUM LUXURY)
 ========================================================= */
-.about {
-  position: relative;
-  overflow: hidden;
+/* =========================================================
+   GLOBAL ABOUT PAGE ENHANCEMENT
+========================================================= */
+
+.about-page {
+  background: radial-gradient(circle at top, #0f0f0f, #050505);
+  color: #fff;
 }
 
-.about-container {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 60px;
-  align-items: center;
-  max-width: 1200px;
+/* Section spacing upgrade */
+.section {
+  padding: 80px 20px;
+  max-width: 1100px;
   margin: auto;
-}
-
-.about-text {
   position: relative;
 }
+
+/* Glass card effect for sections */
+.section:not(.nav):not(.contact) {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  margin-bottom: 40px;
+  padding: 60px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.4s ease;
+}
+
+.section:not(.nav):not(.contact):hover {
+  transform: translateY(-5px);
+  border-color: rgba(201, 169, 110, 0.3);
+}
+
+/* =========================================================
+   TITLE ENHANCEMENT
+========================================================= */
 
 .about-title {
   font-family: 'Playfair Display', serif;
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: 44px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.about-line {
+.about-title::after {
+  content: "";
+  display: block;
   width: 60px;
   height: 2px;
   background: var(--gold);
-  margin: 10px 0 25px;
-  transition: 0.6s;
+  margin: 12px auto 0;
+  transition: 0.4s;
 }
 
-.about.show .about-line {
+.section:hover .about-title::after {
   width: 100px;
 }
 
+/* =========================================================
+   TEXT IMPROVEMENT
+========================================================= */
+
 .about-description {
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 20px;
+  color: #bbb;
+  font-size: 15.5px;
+  line-height: 1.9;
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 20px;
 }
+
+/* =========================================================
+   LIST UPGRADE
+========================================================= */
 
 .about-list {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  max-width: 700px;
+  margin: 20px auto;
 }
 
 .about-list li {
   position: relative;
-  padding-left: 20px;
+  padding-left: 28px;
+  margin-bottom: 12px;
+  color: #ccc;
+  transition: 0.3s;
 }
 
 .about-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--gold);
-  font-size: 18px;
-}
-
-/* About stats */
-.about-stats {
-  display: flex;
-  gap: 40px;
-  margin-top: 30px;
-}
-
-.about-stats h3 {
-  color: var(--gold);
-  font-size: 28px;
-  margin: 0;
-}
-
-.about-stats span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* About image */
-.about-image {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.about-image img {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.about-image:hover img {
-  transform: scale(1.08);
-}
-
-/* About glow effect */
-.about::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(201, 169, 110, 0.08), transparent 70%);
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.about-list li:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+/* =========================================================
+   ABOUT MAIN SECTION
+========================================================= */
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-text {
+  max-width: 750px;
+  text-align: center;
+}
+
+/* =========================================================
+   HERO (TOP SECTION)
+========================================================= */
+
+.section:first-of-type {
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+}
+
+.section:first-of-type .about-title {
+  font-size: 52px;
+}
+
+.section:first-of-type .about-description {
+  font-size: 16px;
+  color: #aaa;
+}
+
+/* =========================================================
+   CONTACT SECTION UPGRADE
+========================================================= */
+
+.contact {
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.contact p {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+/* Form styling */
+#contactForm {
+  max-width: 500px;
+  margin: auto;
+}
+
+#contactForm input,
+#contactForm textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #0f0f0f;
+  color: #fff;
+  transition: 0.3s;
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+  border-color: var(--gold);
+  outline: none;
+  box-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
+}
+
+/* Button */
+.btn {
+  background: linear-gradient(135deg, #c9a96e, #a8894f);
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(201, 169, 110, 0.4);
+}
+
+/* =========================================================
+   ANIMATION (SMOOTH FADE-IN)
+========================================================= */
+
+.section {
   opacity: 0;
-  transition: 1s;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
 }
 
-.about.show::before {
-  opacity: 1;
-}
-
-/* About reveal animation */
-.about.show .reveal:nth-child(1) {
-  transition-delay: 0.2s;
-}
-.about.show .reveal:nth-child(2) {
-  transition-delay: 0.4s;
-}
-.about.show .reveal:nth-child(3) {
-  transition-delay: 0.6s;
-}
-.about.show .reveal:nth-child(4) {
-  transition-delay: 0.8s;
-}
-
-.about.show .reveal {
+body.loaded .section {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* =========================================================
+   MOBILE OPTIMIZATION
+========================================================= */
+
 @media (max-width: 768px) {
-  .about-container {
-    grid-template-columns: 1fr;
-    text-align: center;
+
+  .section {
+    padding: 50px 20px;
   }
 
-  .about-stats {
-    justify-content: center;
+  .about-title {
+    font-size: 30px;
   }
 
-  .about-line {
-    margin: 10px auto 25px;
+  .section:first-of-type .about-title {
+    font-size: 36px;
   }
+
+  .about-description {
+    font-size: 14px;
+  }
+
+  .section:not(.nav):not(.contact) {
+    padding: 40px 20px;
+  }
+
 }
 
 /* =========================================================
@@ -1302,4 +1405,89 @@ textarea {
   .brands-section {
     padding: 40px 20px;
   }
+}
+
+/* GLOBAL SECTION CONSISTENCY */
+.section {
+  max-width: 1100px;
+  margin: 40px auto;
+  border-radius: 12px;
+}
+
+/* DARK PAGES (HOME, SHOP, CART) */
+body:not(.about-page) .section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1a1a1a;
+  backdrop-filter: blur(8px);
+}
+
+/* REMOVE HARSH WHITE LOOK FROM ABOUT (blend it better) */
+body.about-page {
+  background: radial-gradient(circle at top, #0f0f0f, #050505);
+  color: #fff;
+}
+
+body.about-page .section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #1a1a1a;
+  box-shadow: none;
+}
+
+body.about-page .about-description,
+body.about-page p,
+body.about-page li {
+  color: #bbb;
+}
+
+body.about-page .about-title {
+  color: #fff;
+}
+
+.nav {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.nav a {
+  color: #ddd;
+}
+
+.nav a:hover {
+  color: var(--gold);
+}
+
+.btn {
+  background: linear-gradient(135deg, var(--gold), #a8894f);
+  color: #000;
+  padding: 12px 26px;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(201, 169, 110, 0.4);
+}
+
+.products {
+  padding: 80px 40px;
+}
+
+#products {
+  gap: 25px;
+}
+
+.card,
+.brand-card,
+.section {
+  transition: all 0.35s ease;
+}
+
+.card:hover,
+.brand-card:hover,
+.section:hover {
+  transform: translateY(-6px);
 }
