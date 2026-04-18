@@ -1491,3 +1491,33 @@ body.about-page .about-title {
 .section:hover {
   transform: translateY(-6px);
 }
+
+.btn {
+  background: linear-gradient(135deg, var(--gold), #a8894f);
+  color: #000;
+  padding: 12px 26px;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(201, 169, 110, 0.4);
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+.section-title,
+.about-title {
+  letter-spacing: 0.5px;
+}
+
+::selection {
+  background: var(--gold);
+  color: #000;
+}
