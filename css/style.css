@@ -547,7 +547,7 @@ body.about-page .section {
 
 #products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 20px;
 }
 
@@ -739,14 +739,24 @@ body.about-page .section {
 
 @media (max-width: 900px) {
   .layout {
-    grid-template-columns: 105px 1fr;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 10px;
   }
 
   .sidebar,
   .right-panel {
-    font-size: 12px;
-    padding: 10px;
+    position: relative;
+    top: unset;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .main-content {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
   }
 }
 
@@ -1519,5 +1529,54 @@ h1, h2, h3 {
 
 ::selection {
   background: var(--gold);
-  color: #000;
+  color: #151414;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100%;
+}
+
+.brand-card {
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.brand-card p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    order: -1; /* move to top */
+  }
+
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .filter-item {
+    background: #9c9c9c;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 15px;
+  }
 }
