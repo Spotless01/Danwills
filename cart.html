@@ -28,13 +28,47 @@
 
 </header>
 
-<section class="section cart">
+<section class="section cart premium-cart">
 
   <h2>Your Cart</h2>
 
-  <div id="cartItems"></div>
-  <h3 id="total" class="total"></h3>
-  <a href="checkout.html" id="checkoutBtn" class="btn">Checkout</a>
+  <!-- EMPTY STATE -->
+  <div id="emptyCart" class="empty-cart" style="display:none;">
+    <i class="fas fa-shopping-bag"></i>
+    <p>Your cart is empty</p>
+    <a href="shop.html" class="btn">Start Shopping</a>
+  </div>
+
+  <!-- CART ITEMS -->
+  <div id="cartItems" class="cart-items"></div>
+
+  <!-- SUMMARY -->
+  <div class="cart-summary">
+
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span id="total">GHS 0</span>
+    </div>
+
+    <div class="summary-row highlight">
+      <span>Total</span>
+      <span id="grandTotal">GHS 0</span>
+    </div>
+
+    <button onclick="payWithWhatsApp()" class="btn gold checkout-btn">
+      Order via WhatsApp
+    </button>
+
+    <p class="trust-note">
+  ✔ Fast delivery • ✔ Pay on delivery • ✔ 100% Authentic
+</p>
+
+    <a href="shop.html" class="continue">
+      ← Continue Shopping
+    </a>
+
+  </div>
+
 </section>
 
 <!-- FLOATING CART -->
