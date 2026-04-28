@@ -3,143 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Danwilhs</title>
+
+<title>Admin - Upload Product</title>
+
+<link rel="stylesheet" href="css/style.css">
 
 <style>
-  body {
-    background: #0b0b0b;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
+/* Simple clean admin UI */
+.admin-container {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
 
-  .container {
-    max-width: 800px;
-    margin: auto;
-  }
+.admin-container h2 {
+  margin-bottom: 20px;
+}
 
-  h2, h3 {
-    text-align: center;
-    color: gold;
-  }
+.admin-container input,
+.admin-container select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
 
-  form {
-    margin-top: 20px;
-  }
+.admin-container label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
 
-  input, select {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-  }
+.admin-container button {
+  width: 100%;
+  padding: 14px;
+  background: #c9a96e;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-  .btn {
-    background: gold;
-    color: #000;
-    padding: 12px;
-    border: none;
-    width: 100%;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-  }
+.preview {
+  margin-top: 20px;
+}
 
-  .btn:hover {
-    opacity: 0.9;
-  }
-
-  #preview {
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 10px;
-    display: none;
-  }
-
-  #productList div {
-    background: #111;
-    padding: 10px;
-    border-radius: 10px;
-  }
-
-  hr {
-    border: none;
-    height: 1px;
-    background: #222;
-    margin: 40px 0;
-  }
+.preview img,
+.preview video {
+  width: 100%;
+  border-radius: 10px;
+}
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="admin-container">
+  <h2>Upload Product</h2>
 
-  <h2>Admin Panel</h2>
-
-  <!-- ================= ADD PRODUCT ================= -->
   <form id="productForm">
 
-    <input type="text" id="name" placeholder="Product Name" required>
+    <label>Product Name</label>
+    <input type="text" id="name" required>
 
-    <input type="number" id="price" placeholder="Price (GHS)" required>
+    <label>Price (GHS)</label>
+    <input type="number" id="price" required>
 
-    <select id="brand" required>
-      <option value="">Select Brand</option>
-      <option>Lattafa</option>
-      <option>Armaf</option>
-      <option>Maison Yusif</option>
-      <option>Scent of Africa</option>
-      <option>Fragrance World</option>
-      <option>Creed</option>
-      <option>Tom Ford</option>
-      <option>Carolina Herrera</option>
-    </select>
+    <label>Brand</label>
+    <input type="text" id="brand" required>
 
-    <input type="text" id="image" placeholder="Image URL" required>
+    <label>Image URL</label>
+    <input type="text" id="image" required>
 
-    <!-- IMAGE PREVIEW -->
-    <img id="preview">
+    <label>Video Preview URL (optional)</label>
+    <input type="text" id="video">
 
-    <button class="btn" type="submit">Add Product</button>
+    <label>
+      <input type="checkbox" id="trending">
+      Mark as Trending
+    </label>
+
+    <button type="submit">Upload Product</button>
 
   </form>
 
-  <hr>
+  <div class="preview" id="preview"></div>
 
-  <!-- ================= PRODUCT LIST ================= -->
-  <h3>Existing Products</h3>
-  <div id="productList"></div>
 
-  <button onclick="logout()" class="btn">Logout</button>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+  <h2>Upload Product</h2>
+
+  <button onclick="logout()" style="
+    background:#111;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+  ">
+    Logout
+  </button>
 </div>
 
-<!-- ================= FIREBASE ================= -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-  apiKey: "AIzaSyCVLoGB4S25-HSHx_HCtltGs1u_-U4n9lE",
-  authDomain: "danwilhs-store.firebaseapp.com",
-  projectId: "danwilhs-store",
-  storageBucket: "danwilhs-store.firebasestorage.app",
-  messagingSenderId: "486741086200",
-  appId: "1:486741086200:web:aa764d7bb19dd2af7a500d"
-};
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.db = db;
-</script>
+</div>
 
 <script type="module" src="js/admin-auth.js"></script>
-<script type="module" src="js/admin.js"></script>
 
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "danwilhs-store.firebaseapp.com",
+  projectId: "danwilhs-store",
+};
+
+import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const form = document.getElementById("productForm");
+const preview = document.getElementById("preview");
+
+// 🔍 LIVE PREVIEW (Premium touch)
+form.addEventListener("input", () => {
+  const image = document.getElementById("image").value;
+  const video = document.getElementById("video").value;
+
+  preview.innerHTML = `
+    ${image ? `<img src="${image}">` : ""}
+    ${video ? `
+      <video autoplay muted loop playsinline>
+        <source src="${video}">
+      </video>
+    ` : ""}
+  `;
+});
+
+// 🚀 SUBMIT TO FIRESTORE
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const product = {
+    name: document.getElementById("name").value,
+    price: Number(document.getElementById("price").value),
+    brand: document.getElementById("brand").value,
+    image: document.getElementById("image").value,
+    video: document.getElementById("video").value || null,
+    trending: document.getElementById("trending").checked
+  };
+
+  try {
+    await addDoc(collection(db, "products"), product);
+
+    alert("✅ Product uploaded successfully");
+
+    form.reset();
+    preview.innerHTML = "";
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Upload failed");
+  }
+});
+</script>
 
 </body>
 </html>
