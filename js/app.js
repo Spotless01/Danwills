@@ -199,6 +199,10 @@ function renderTrending(products) {
     const card = document.createElement("div");
     card.classList.add("trending-item");
 
+    card.addEventListener("click", () => {
+      goToProduct(product.id);
+    });
+
     card.innerHTML = `
       <div class="media">
         <img src="${product.image}" class="product-img">
@@ -343,7 +347,7 @@ function initEvents() {
 
 
 
-function payWithWhatsApp() {
+function payWithWhatsApp(btn) {
 
   const phone = "233249144616";
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -351,6 +355,12 @@ function payWithWhatsApp() {
   if (cart.length === 0) {
     alert("Your cart is empty");
     return;
+  }
+
+  // 🔥 BUTTON LOADING STATE
+  if (btn) {
+    btn.innerText = "Processing...";
+    btn.disabled = true;
   }
 
   let message = `Hello Danwilhs Fragrance Hub,%0A%0A`;
@@ -370,18 +380,51 @@ function payWithWhatsApp() {
 
   message += `%0A*Total:* GHS ${total}`;
 
-  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  // 🔥 SHOW SUCCESS FIRST
+  showSuccess();
+
+  // 🔊 SOUND (subtle click feel)
+  playSuccessSound();
+
+  // 📳 VIBRATION (mobile luxury feel)
+  if (navigator.vibrate) navigator.vibrate([10, 40, 10]);
+
+  // 🧹 CLEAR CART (IMPORTANT)
+  localStorage.removeItem("cart");
+  updateCartCount();
+
+  setTimeout(() => {
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  }, 900);
 }
 
 //Sucess Popup
 function showSuccess() {
   const popup = document.getElementById("successPopup");
-  if (popup) popup.style.display = "flex";
+  if (!popup) return;
+
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+
+    // 🔥 OPTIONAL: reload cart page clean
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
+
+  }, 2500);
 }
 
 function closeSuccess() {
   const popup = document.getElementById("successPopup");
-  if (popup) popup.style.display = "none";
+  if (popup) popup.classList.remove("show");
+}
+
+function playSuccessSound() {
+  const audio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3");
+  audio.volume = 0.3;
+  audio.play();
 }
 
 // ================= CONTACT FORM → WHATSAPP =================
