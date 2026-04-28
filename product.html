@@ -26,6 +26,7 @@
   </nav>
 </header>
 
+
 <!-- ================= PRODUCT ================= -->
 <section class="section">
   <div id="product">Loading product...</div>
@@ -94,52 +95,126 @@ async function loadProduct() {
 }
 
 // ================= RENDER PRODUCT =================
-
 function renderProduct(p) {
 
   window.currentProduct = p;
 
   document.getElementById("product").innerHTML = `
-  <div class="product-layout">
+  <div class="product-elite">
 
-    <div class="product-image">
-      <img src="${p.image}" />
+    <div class="product-media">
+      <div class="media-box">
+        <img src="${p.image}" class="main-img">
+
+        ${p.video ? `
+          <video class="hover-video" muted loop playsinline>
+            <source src="${p.video}" type="video/mp4">
+          </video>
+        ` : ""}
+      </div>
     </div>
 
     <div class="product-info">
 
+      <p class="brand">${p.brand || "Luxury Collection"}</p>
       <h1>${p.name}</h1>
-      <p class="price">GHS ${p.price}</p>
 
-      <div class="stars">
-        ${"★".repeat(Math.round(p.rating || 4))}
-        ${"☆".repeat(5 - Math.round(p.rating || 4))}
-        <span>${p.rating || 4}/5</span>
+      <div class="price-row">
+        <span class="price">GHS ${p.price}</span>
       </div>
 
-      <!-- NOTES -->
-      <h3>Fragrance Notes</h3>
-
-      <div class="notes">
-        <div><strong>Top:</strong> ${p.notes?.top?.join(", ") || "-"}</div>
-        <div><strong>Middle:</strong> ${p.notes?.middle?.join(", ") || "-"}</div>
-        <div><strong>Base:</strong> ${p.notes?.base?.join(", ") || "-"}</div>
+      <div class="qty-box">
+        <button onclick="changeQty(-1)">−</button>
+        <span id="qty">1</span>
+        <button onclick="changeQty(1)">+</button>
       </div>
 
-      <br>
+      <div class="product-actions">
+        <button class="btn gold add-cart-btn"
+          data-product='${encodeURIComponent(JSON.stringify(p))}'>
+          Add to Cart
+        </button>
 
-      <button class="btn" onclick='addToCart(${JSON.stringify(p)}, this)'>
-  Add to Cart
-</button>
+        <button class="btn outline whatsapp-btn">
+          Buy via WhatsApp
+        </button>
+      </div>
 
     </div>
+
   </div>
 
-  <div class="related">
-    <h2>You May Also Like</h2>
-    <div id="relatedProducts" class="products"></div>
-  </div>
+  <div id="relatedProducts" class="grid"></div>
   `;
+
+  // ✅ Attach AFTER render
+document.querySelectorAll(".add-cart-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const product = JSON.parse(
+      decodeURIComponent(btn.dataset.product)
+    );
+
+    window.addToCart({
+      ...product,
+      qty: qty
+    });
+  });
+});
+
+document.querySelectorAll(".whatsapp-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    buyNow(window.currentProduct);
+  });
+});
+
+  qty = 1;
+
+  initMediaHover();
+}
+
+
+
+function initMediaHover() {
+  const box = document.querySelector(".media-box");
+  const video = document.querySelector(".hover-video");
+
+  if (!video) return;
+
+  box.addEventListener("mouseenter", () => {
+    video.style.opacity = 1;
+    video.play();
+  });
+
+  box.addEventListener("mouseleave", () => {
+    video.pause();
+    video.currentTime = 0;
+    video.style.opacity = 0;
+  });
+}
+
+let qty = 1;
+
+function changeQty(amount) {
+  qty += amount;
+
+  if (qty < 1) qty = 1;
+
+  document.getElementById("qty").innerText = qty;
+}
+
+function buyNow(product) {
+  const phone = "233249144616";
+
+  const message =
+    `Hello Danwilhs Fragrance Hub,%0A%0A` +
+    `I want to order:%0A` +
+    `${product.name}%0A` +
+    `Quantity: ${qty}%0A` +
+    `Total: GHS ${product.price * qty}`;
+
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
 // ================= RELATED PRODUCTS =================
@@ -163,14 +238,19 @@ async function loadRelated(current) {
   related = related.slice(0, 4);
 
   document.getElementById("relatedProducts").innerHTML =
-    related.map(p => `
-      <div class="card">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p class="price">GHS ${p.price}</p>
+  related.map(p => `
+    <div class="card">
+
+      <img src="${p.image}">
+      <h3>${p.name}</h3>
+      <p class="price">GHS ${p.price}</p>
+
+      <div class="card-actions">
         <a href="product.html?id=${p.id}" class="btn">View</a>
       </div>
-    `).join("");
+
+    </div>
+  `).join("");
 }
 
 // ================= INIT =================
