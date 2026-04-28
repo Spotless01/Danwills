@@ -33,9 +33,20 @@
 
 </header>
 
+<section class="section shop-hero">
+  <h2>Explore Our Collection</h2>
+  <p>Discover luxury fragrances curated for elegance.</p>
+</section>
+
 <section class="section">
-  <h2 id="categoryTitle">All Products</h2>
+
+  <div class="section-header">
+    <h2 id="categoryTitle">All Products</h2>
+    <input type="text" id="searchInput" placeholder="Search perfumes...">
+  </div>
+
   <div id="products" class="grid"></div>
+
 </section>
 
 <!-- FLOATING CART -->
@@ -65,11 +76,8 @@
   window.db = db;
 </script>
 
-<!-- ================= APP ================= -->
-<script type="module" src="js/app.js"></script>
-
-<!-- ================= CART ================= -->
 <script src="js/cart.js"></script>
+<script type="module" src="js/app.js"></script>
 
 <script>
 window.addEventListener("load", () => {
