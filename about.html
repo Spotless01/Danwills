@@ -3,179 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About | Dan Willhs</title>
+<title>About | Danwilhs</title>
+
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body class="about-page">
 
-<header class="nav">
+<!-- ================= NAV ================= -->
+<header class="nav glass">
+  <h1 class="logo">Danwilhs</h1>
 
-  <h1 class="logo">Dan Willhs</h1>
-
-  <!-- HAMBURGER -->
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-  <!-- NAV LINKS -->
   <nav id="navLinks">
     <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
-    <a href="about.html">About</a>
+    <a href="about.html" class="active">About</a>
     <a href="cart.html">Cart</a>
   </nav>
-
-  <!-- SEARCH (optional for all pages) -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search perfumes...">
-  </div>
-
 </header>
 
-<!-- HERO -->
-<section class="section" style="text-align:center;">
-  <h1 class="about-title">About Us</h1>
-  <p class="about-description" style="max-width:700px;margin:auto;">
-    Discover the story behind Danwilhs Fragrance Hub.
+<!-- ================= HERO ================= -->
+<section class="about-hero luxury-hero">
+
+  <div class="overlay luxury-overlay"></div>
+
+  <div class="hero-text">
+    <h1>More Than Fragrance</h1>
+    <p>We don’t just sell perfumes — we create identity, presence, and confidence.</p>
+
+    <a href="shop.html" class="btn gold">Explore Collection</a>
+  </div>
+
+</section>
+
+<!-- ================= TRUST STRIP ================= -->
+<section class="trust premium-trust">
+  <div><i class="fas fa-certificate"></i> 100% Authentic Products</div>
+  <div><i class="fas fa-truck"></i> Fast Nationwide Delivery</div>
+  <div><i class="fas fa-users"></i> Trusted by 100+ Customers</div>
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ================= STORY ================= -->
+<section class="section luxury-split">
+
+  <div class="split-text">
+    <h2>The Danwilhs Story</h2>
+
+    <p>
+      Danwilhs Fragrance Hub is one of Ghana’s fastest-growing fragrance brands,
+      built on a simple belief — <strong>everyone deserves a signature scent that defines them.</strong>
+    </p>
+
+    <p>
+      Founded by Daniel Asante, the brand has grown into a trusted destination
+      for authentic perfumes, niche scents, and premium fragrance oils.
+    </p>
+
+    <a href="https://wa.me/233249144616" class="btn">
+      Chat With Us
+    </a>
+  </div>
+
+  <div class="split-image">
+    <img src="https://images.pexels.com/photos/36378594/pexels-photo-36378594.jpeg">
+  </div>
+
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ================= AUTHORITY ================= -->
+<section class="section center">
+
+  <h2>Why People Trust Danwilhs</h2>
+
+  <div class="grid features">
+
+    <div class="feature-card">
+      <i class="fas fa-certificate"></i>
+      <h3>Authenticity First</h3>
+      <p>No fake products. Only verified, high-quality fragrances.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-fire"></i>
+      <h3>Trending Scents</h3>
+      <p>We stay ahead — bringing you what’s hot before others.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-user"></i>
+      <h3>Personalized Experience</h3>
+      <p>We help you choose scents that match your personality.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<div class="luxury-divider"></div>
+
+<section class="section center">
+
+  <h2>Best Selling Fragrances</h2>
+  <p class="sub">These are customer favorites — don’t miss out.</p>
+
+  <div class="grid" id="aboutProducts"></div>
+
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ================= PRODUCTS PHILOSOPHY ================= -->
+<section class="section luxury-dark center">
+
+  <h2>Our Philosophy</h2>
+
+  <p class="big-text">
+    “Perfume is not just about smelling good —  
+    it’s about presence, identity, and leaving a lasting impression.”
   </p>
-</section>
-
-<!-- MAIN ABOUT -->
-<section class="section about fade animate">
-
-<div class="about-container">
-
-<div class="about-text">
-
-<p class="about-description reveal">
-Danwilhs Fragrance Hub is a fast-rising and highly influential fragrance brand in Ghana, founded and led by Daniel Asante. The brand has positioned itself as a trusted destination for authentic, high-quality perfumes, serving both retail and wholesale customers across the country.
-</p>
-
-<p class="about-description reveal">
-At its core, Danwilhs Fragrance Hub is not just a perfume business—it is a movement shaping fragrance culture in Ghana, especially in the growing market of perfume oils and niche scents.
-</p>
-
-</div>
-
-</div>
 
 </section>
 
-<!-- VISION & MISSION -->
+<div class="luxury-divider"></div>
+
+<!-- ================= BUSINESS MODEL ================= -->
 <section class="section">
-<h2 class="about-title">Vision & Mission</h2>
 
-<p class="about-description">
-<b>Vision:</b> To become one of Africa’s leading fragrance distributors, known for authenticity, uniqueness, and market influence.
-</p>
+  <h2 class="center">What We Offer</h2>
 
-<p class="about-description">
-<b>Mission:</b> To provide customers with original, long-lasting, and exclusive fragrances while educating the market on quality, authenticity, and the true value of perfumes.
-</p>
+  <div class="grid features">
+
+    <div class="feature-card">
+      <h3>Retail</h3>
+      <p>Premium fragrances for individuals who want to stand out.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Wholesale</h3>
+      <p>We supply resellers across Ghana with trusted products.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Exclusive Oils</h3>
+      <p>Undiluted oils designed for long-lasting performance.</p>
+    </div>
+
+  </div>
+
 </section>
 
-<!-- BUSINESS MODEL -->
-<section class="section">
-<h2 class="about-title">Business Model</h2>
+<div class="luxury-divider"></div>
 
-<p class="about-description">
-Danwilhs Fragrance Hub operates on a dual-structured model:
-</p>
+<!-- ================= SOCIAL PROOF ================= -->
+<section class="section center">
 
-<ul class="about-list">
-<li>Retail Sales: Supplying individual customers with premium perfumes and oils</li>
-<li>Wholesale Distribution: Partnering with resellers and vendors across Ghana</li>
-</ul>
+  <h2>Trusted by Fragrance Lovers</h2>
+
+  <p class="sub">
+    Hundreds of satisfied customers across Ghana trust Danwilhs.
+  </p>
+
+  <a href="https://wa.me/233249144616" class="btn gold">
+    Order on WhatsApp
+  </a>
+
 </section>
 
-<!-- PRODUCT RANGE -->
-<section class="section">
-<h2 class="about-title">Product Range</h2>
+<div class="luxury-divider"></div>
 
-<ul class="about-list">
-<li>Designer-inspired perfumes</li>
-<li>Niche and rare fragrances</li>
-<li>Undiluted perfume oils</li>
-<li>Unisex, masculine, and feminine scents</li>
-</ul>
+<!-- ================= FUTURE ================= -->
+<section class="section luxury-split reverse">
 
-<p class="about-description">
-We focus on unique and uncommon fragrances to help customers stand out.
-</p>
+  <div class="split-text">
+    <h2>Our Vision</h2>
+
+    <p>
+      We are building more than a brand —  
+      we are building a <strong>fragrance empire across Africa.</strong>
+    </p>
+
+    <ul class="about-list">
+      <li>Expansion across West Africa</li>
+      <li>Private-label fragrances</li>
+      <li>Global partnerships</li>
+    </ul>
+  </div>
+
+  <div class="split-image">
+    <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1200">
+  </div>
+
 </section>
 
-<!-- MARKET POSITION -->
-<section class="section">
-<h2 class="about-title">Market Position & Influence</h2>
+<div class="luxury-divider"></div>
 
-<ul class="about-list">
-<li>Pioneers of undiluted perfume oil trends in Ghana</li>
-<li>Trusted for authentic products only</li>
-<li>Educating customers on fake vs original perfumes</li>
-<li>Strong reputation in the fragrance community</li>
-</ul>
+<!-- ================= CTA ================= -->
+<section class="cta luxury-cta">
+
+  <div class="cta-box">
+    <h2>Find Your Signature Scent Today</h2>
+    <p>Let us help you choose the perfect fragrance for your lifestyle.</p>
+
+    <a href="https://wa.me/233249144616" class="btn gold">
+      Chat on WhatsApp
+    </a>
+  </div>
+
 </section>
 
-<!-- CUSTOMER EXPERIENCE -->
-<section class="section">
-<h2 class="about-title">Customer Experience</h2>
+<section class="section center final-cta">
 
-<ul class="about-list">
-<li>Personalized fragrance recommendations</li>
-<li>Long-lasting scents suited for Ghana’s climate</li>
-<li>Reliable delivery</li>
-<li>Strong customer relationships</li>
-</ul>
+  <h2>Still Thinking?</h2>
+  <p>Let us help you find your perfect scent today.</p>
+
+  <a href="https://wa.me/233249144616" class="btn gold">
+    Chat Now & Get Recommendations
+  </a>
+
 </section>
 
-<!-- COMPETITIVE ADVANTAGE -->
-<section class="section">
-<h2 class="about-title">Competitive Advantage</h2>
-
-<ul class="about-list">
-<li>Early access to trending fragrances</li>
-<li>Strong street credibility</li>
-<li>Deep perfume knowledge</li>
-<li>Health-conscious and safe products</li>
-<li>Loyal customer base</li>
-</ul>
-</section>
-
-<!-- PHILOSOPHY -->
-<section class="section" style="text-align:center;">
-<h2 class="about-title">Our Philosophy</h2>
-
-<p class="about-description">
-“Perfume is not just about smelling good — it’s about presence, identity, and making a lasting impression.”
-</p>
-</section>
-
-<!-- FUTURE -->
-<section class="section">
-<h2 class="about-title">Future Goals</h2>
-
-<ul class="about-list">
-<li>Expansion across West Africa</li>
-<li>Partnerships with international perfume houses</li>
-<li>Building a fragrance empire brand</li>
-<li>Launching private-label scents</li>
-</ul>
-</section>
-
-<!-- CONTACT -->
+<!-- ================= CONTACT ================= -->
 <section class="contact section">
-  <h2>Contact Us</h2>
-  <p>Have a question or need help? Send us a message instantly.</p>
+
+  <h2>Send Us a Message</h2>
 
   <form id="contactForm">
+
+  <div class="row">
     <input type="text" id="name" placeholder="Your Name" required>
     <input type="email" id="email" placeholder="Your Email" required>
-    <textarea id="message" placeholder="Your Message" required></textarea>
+  </div>
 
-    <button type="submit" class="btn">Send Message</button>
-  </form>
+  <textarea id="message" placeholder="Your Message" required></textarea>
+
+  <button type="submit" class="btn">Send Message</button>
+
+</form>
+
 </section>
 
+
+<a href="https://wa.me/233249144616" class="whatsapp-float">
+  <i class="fab fa-whatsapp"></i>
+</a>
+<!-- ================= SCRIPTS ================= -->
 <script type="module" src="js/app.js"></script>
 
 <script>
