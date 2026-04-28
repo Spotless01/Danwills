@@ -14,7 +14,7 @@ const auth = getAuth(app);
 
 // ✅ LOGIN
 window.login = async function () {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
   if (!email || !password) {
@@ -23,14 +23,24 @@ window.login = async function () {
   }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    alert("Login successful");
+    const user = userCredential.user;
+
+    // 🔒 ONLY ALLOW YOUR ADMIN EMAIL
+    const ADMIN_EMAIL = "danwilhsfragrancehub@gmail.com"; // 👈 change to your email
+
+    if (user.email !== ADMIN_EMAIL) {
+      alert("Access denied: Not an admin");
+
+      await auth.signOut(); // 🔥 kick them out
+      return;
+    }
 
     window.location.href = "admin.html";
 
   } catch (err) {
     console.error(err);
-    alert(err.message); // 👈 show real error
+    alert("Invalid login credentials");
   }
 };
