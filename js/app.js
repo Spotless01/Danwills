@@ -1,6 +1,10 @@
+import { db } from "./firebase.js";
+
 import {
   collection,
-  getDocs
+  getDocs,
+  query,
+  limit
 } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
 
@@ -33,12 +37,14 @@ function initAnimations() {
 
 
 async function loadProductsFromFirebase() {
-  if (!container) return;
+  if (!container && !trendingContainer) return;
 
-  container.innerHTML = "Loading products...";
+  if (container) {
+    container.innerHTML = "Loading products...";
+  }
 
   try {
-    const snap = await getDocs(collection(window.db, "products"));
+    const snap = await getDocs(collection(db, "products"));
 
     products = [];
 
@@ -50,15 +56,17 @@ async function loadProductsFromFirebase() {
     });
 
     renderProducts(products);
-    renderTrending();
+
+    const trending = products.filter(p => p.trending === true);
+    renderTrending(trending);
 
   } catch (err) {
     console.error(err);
-    container.innerHTML = "Failed to load products";
+
+    if (container) {
+      container.innerHTML = "Failed to load products";
+    }
   }
-
-
-  console.log("DB:", window.db);
 }
 
 // ================= RENDER PRODUCTS =================
@@ -74,62 +82,156 @@ function renderProducts(list) {
 
   list.forEach(p => {
 
-    // ⭐ Generate rating stars
     let stars = "";
     for (let i = 1; i <= 5; i++) {
       stars += `<span class="star ${i <= (p.rating || 4) ? "filled" : ""}">★</span>`;
     }
 
     container.innerHTML += `
-      <div class="card">
+  <div class="card" data-id="${p.id}">
 
-        <img src="${p.image}" alt="${p.name}">
+    <img src="${p.image}" alt="${p.name}">
 
-        <h3>${p.name}</h3>
-        <p class="brand">${p.brand}</p>
+    <h3>${p.name}</h3>
+    <p class="brand">${p.brand}</p>
 
-        <!-- ⭐ RATING -->
-        <div class="rating">
-          ${stars}
-          <span class="rating-value">${p.rating || 4}/5</span>
-        </div>
+    <div class="rating">
+      ${stars}
+      <span class="rating-value">${p.rating || 4}/5</span>
+    </div>
 
-        <p class="brand">${p.brand}</p>
+    <p class="price">GHS ${p.price}</p>
 
-<div class="notes">
-  <div><strong>Top:</strong> ${p.notes?.top?.join(", ") || "-"}</div>
-  <div><strong>Middle:</strong> ${p.notes?.middle?.join(", ") || "-"}</div>
-  <div><strong>Base:</strong> ${p.notes?.base?.join(", ") || "-"}</div>
-</div>
+    <div class="card-actions">
+      <button class="btn view-btn">View</button>
 
-        <p class="price">GHS ${p.price}</p>
+      <button 
+        class="btn add-cart-btn"
+        data-product='${encodeURIComponent(JSON.stringify(p))}'>
+        Add
+      </button>
+    </div>
 
-        <a href="product.html?id=${p.id}" class="btn">
-  View Product
-</a>
+  </div>
+`;
 
-      </div>
-    `;
   });
 }
 
+
+document.body.addEventListener("click", (e) => {
+
+  // ADD TO CART
+  const addBtn = e.target.closest(".add-cart-btn");
+  if (addBtn) {
+    const product = JSON.parse(
+      decodeURIComponent(addBtn.dataset.product)
+    );
+
+    window.addToCart(product);
+
+    const img = addBtn.closest(".card")?.querySelector("img");
+    if (img) flyToCart(img);
+
+    return;
+  }
+
+  // VIEW BUTTON
+  const viewBtn = e.target.closest(".view-btn");
+  if (viewBtn) {
+    const card = viewBtn.closest(".card");
+    goToProduct(card.dataset.id);
+    return;
+  }
+
+  // CLICK CARD
+  const card = e.target.closest(".card");
+  if (card) {
+    goToProduct(card.dataset.id);
+  }
+
+});
+
+
+
+window.addEventListener("scroll", () => {
+  const scrolled = window.scrollY;
+
+  document.querySelectorAll(".parallax").forEach(el => {
+    const speed = el.getAttribute("data-speed") || 0.3;
+    el.style.transform = `translateY(${scrolled * speed}px)`;
+  });
+});
+
+function flyToCart(imgElement) {
+  const cart = document.querySelector(".floating-cart");
+  const img = imgElement.cloneNode(true);
+
+  img.classList.add("fly-item");
+
+  const rect = imgElement.getBoundingClientRect();
+  img.style.left = rect.left + "px";
+  img.style.top = rect.top + "px";
+
+  document.body.appendChild(img);
+
+  const cartRect = cart.getBoundingClientRect();
+
+  setTimeout(() => {
+    img.style.left = cartRect.left + "px";
+    img.style.top = cartRect.top + "px";
+    img.style.opacity = 0.3;
+    img.style.transform = "scale(0.3)";
+  }, 50);
+
+  setTimeout(() => img.remove(), 800);
+}
+
 // ================= TRENDING =================
-function renderTrending() {
-  if (!trendingContainer) return;
+function renderTrending(products) {
+  const track = document.getElementById("trending");
 
-  const trending = [...products]
-    .sort((a, b) => (b.rating || 4) - (a.rating || 4))
-    .slice(0, 4);
+  if (!track) return; // 🛑 prevents crash
 
-  trendingContainer.innerHTML = trending.map(p => `
-    <div class="trending-item" onclick="goToProduct(${p.id})">
-      <img src="${p.image}" alt="${p.name}">
-      <div>
-        <p>${p.name}</p>
-        <span>⭐ ${p.rating || 4}</span>
+  track.innerHTML = "";
+
+  products.forEach(product => {
+    const card = document.createElement("div");
+    card.classList.add("trending-item");
+
+    card.innerHTML = `
+      <div class="media">
+        <img src="${product.image}" class="product-img">
+
+        ${product.video ? `
+          <video class="preview-video" muted loop playsinline>
+            <source src="${product.video}" type="video/mp4">
+          </video>
+        ` : ""}
       </div>
-    </div>
-  `).join("");
+
+      <div class="trending-info">
+        <h4>${product.name}</h4>
+        <p class="trending-price">GH₵ ${product.price}</p>
+      </div>
+    `;
+
+    track.appendChild(card);
+
+    const video = card.querySelector(".preview-video");
+
+    if (video) {
+      card.addEventListener("mouseenter", () => {
+        video.currentTime = 0;
+        video.play();
+      });
+
+      card.addEventListener("mouseleave", () => {
+        video.pause();
+        video.currentTime = 0;
+      });
+    }
+  });
 }
 
 // ================= NAVIGATION =================
@@ -208,23 +310,22 @@ function filterProducts() {
 function filterByBrand(brand) {
   if (!searchInput) return;
 
-  // Clear search
   searchInput.value = "";
 
-  // Uncheck all first
-  checkboxes.forEach(cb => cb.checked = false);
+  const mainBrands = ["Lattafa", "Armaf", "Creed", "Tom Ford"];
 
-  // Check selected brand
-  checkboxes.forEach(cb => {
-    if (cb.value === brand) {
-      cb.checked = true;
-    }
-  });
+  let filtered;
 
-  filterProducts();
+  if (brand === "Other") {
+    filtered = products.filter(p => !mainBrands.includes(p.brand));
+  } else {
+    filtered = products.filter(p => p.brand === brand);
+  }
 
-  // Scroll to products
-  document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+  renderProducts(filtered);
+
+  document.getElementById("products")
+    ?.scrollIntoView({ behavior: "smooth" });
 }
 
 // ================= EVENTS =================
@@ -239,6 +340,7 @@ function initEvents() {
     });
   }
 }
+
 
 
 function payWithWhatsApp() {
@@ -288,7 +390,20 @@ function closeSuccess() {
   initEvents();
   initNav();
 
-  loadProductsFromFirebase(); // ✅ THIS is the real source now
+  loadProductsFromFirebase(); // shop
+  loadAboutProducts();        // about page
+
+  // scroll reveal
+  const reveals = document.querySelectorAll(".section");
+
+  window.addEventListener("scroll", () => {
+    reveals.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < window.innerHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  });
 
   // CONTACT FORM
   const contactForm = document.getElementById("contactForm");
@@ -311,7 +426,27 @@ function closeSuccess() {
       window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
     });
   }
+
+  
 });
+
+function openQuickView(product) {
+  document.getElementById("quickView").style.display = "flex";
+  document.getElementById("quickImg").src = product.image;
+  document.getElementById("quickName").textContent = product.name;
+  document.getElementById("quickPrice").textContent = "GHS " + product.price;
+  document.getElementById("quickLink").href = `product.html?id=${product.id}`;
+}
+
+function closeQuickView() {
+  document.getElementById("quickView").style.display = "none";
+}
+
+function openQuickViewById(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+  openQuickView(product);
+}
 
 
 window.toggleMenu = toggleMenu;
@@ -321,3 +456,45 @@ window.filterByBrand = filterByBrand;
 window.showAllProducts = showAllProducts;
 
 window.payWithWhatsApp = payWithWhatsApp;
+
+window.addToCart = window.addToCart || function(product) {
+  console.error("addToCart not found. Check cart.js load order.");
+};
+
+
+
+window.addEventListener("scroll", () => {
+  const reveals = document.querySelectorAll(".section");
+
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+});
+
+async function loadAboutProducts() {
+  const aboutProducts = document.getElementById("aboutProducts");
+  if (!aboutProducts) return;
+
+  try {
+    const q = query(collection(db, "products"), limit(4));
+    const snap = await getDocs(q);
+
+    aboutProducts.innerHTML = snap.docs.map(doc => {
+      const p = doc.data();
+
+      return `
+        <div class="card" onclick="location.href='product.html?id=${doc.id}'">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p class="price">GHS ${p.price}</p>
+        </div>
+      `;
+    }).join("");
+
+  } catch (err) {
+    console.error("About products failed:", err);
+  }
+}
