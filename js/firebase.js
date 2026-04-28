@@ -1,17 +1,19 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+import { initializeApp, getApps, getApp } 
+from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
 
+import { getFirestore } 
+from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+// YOUR CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyCVLoGB4S25-HSHx_HCtltGs1u_-U4n9lE",
   authDomain: "danwilhs-store.firebaseapp.com",
   projectId: "danwilhs-store",
-  storageBucket: "danwilhs-store.firebasestorage.app",
-  messagingSenderId: "486741086200",
-  appId: "1:486741086200:web:aa764d7bb19dd2af7a500d"
 };
 
-const app = initializeApp(firebaseConfig);
+// ✅ PREVENT DUPLICATE INITIALIZATION
+const app = getApps().length === 0
+  ? initializeApp(firebaseConfig)
+  : getApp();
 
 export const db = getFirestore(app);
-export const auth = getAuth(app);
